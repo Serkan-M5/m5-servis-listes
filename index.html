@@ -717,7 +717,7 @@
     row.innerHTML = `
       <div class="service-badge">${item.name}</div>
       <div>
-        <input type="text" id="trn_${index}" class="trn-input" placeholder="Tren No" value="${item.defaultTrn}" oninput="validateLiveDuplicates()">
+        <input type="text" inputmode="numeric" id="trn_${index}" class="trn-input" placeholder="Tren No" value="${item.defaultTrn}" oninput="validateLiveDuplicates()">
       </div>
       <div>
         <select id="park_${index}" class="park-select placeholder-active" onchange="this.classList.remove('placeholder-active')">
