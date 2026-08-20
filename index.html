@@ -236,6 +236,7 @@
       cursor: pointer;
     }
     .park-select option { background: #1e293b; color: #fff; }
+    .park-select:invalid { color: var(--text-muted); font-weight: 600; }
     .radio-control-group {
       display: flex;
       align-items: center;
@@ -574,7 +575,7 @@
 
     <div style="margin-top: 12px;">
       <label style="font-size: 11px; font-weight: 800; color: #94a3b8; display: block; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;">BİLGİLENDİRME NOTU</label>
-      <textarea id="noteInput" class="trn-input" style="height: 55px; text-align: left; resize: vertical;" placeholder="Listeye eklemek istediğiniz notu buraya yazın..."></textarea>
+      <textarea id="noteInput" class="trn-input" style="height: 55px; text-align: left; resize: vertical;" placeholder="Listeye eklemek istediğiniz notu buraya yazın..." autocomplete="off" autocorrect="off" spellcheck="false" data-lpignore="true"></textarea>
     </div>
 
     <div class="actions">
@@ -725,19 +726,18 @@
     const row = document.createElement("div");
     row.className = "row-item";
 
-    let optionsHtml = "";
+    let optionsHtml = `<option value="" disabled selected>Tren Konumunu Seç</option>`;
     parkLocations.forEach(loc => {
-      const selected = loc === item.defaultPark ? "selected" : "";
-      optionsHtml += `<option value="${loc}" ${selected}>${loc}</option>`;
+      optionsHtml += `<option value="${loc}">${loc}</option>`;
     });
 
     row.innerHTML = `
       <div class="service-badge">${item.name}</div>
       <div>
-        <input type="text" inputmode="numeric" pattern="[0-9]*" id="trn_${index}" class="trn-input" placeholder="Tren No" value="${item.defaultTrn}" oninput="validateLiveDuplicates()">
+        <input type="text" inputmode="numeric" pattern="[0-9]*" id="trn_${index}" class="trn-input" placeholder="Tren No" value="${item.defaultTrn}" oninput="validateLiveDuplicates()" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-lpignore="true">
       </div>
       <div>
-        <select id="park_${index}" class="park-select">
+        <select id="park_${index}" class="park-select" required>
           ${optionsHtml}
         </select>
       </div>
@@ -759,9 +759,12 @@
       const trnInput = document.getElementById(`trn_${index}`);
       const radioCheck = document.getElementById(`radio_${index}`);
       const countInput = document.getElementById(`count_${index}`);
-      
+      const parkSelect = document.getElementById(`park_${index}`);
+
       trnInput.value = "";
       trnInput.classList.remove("input-error");
+
+      parkSelect.selectedIndex = 0;
       
       radioCheck.checked = false;
       countInput.value = "1";
@@ -848,6 +851,12 @@
   function generateOutput() {
     if (validateLiveDuplicates()) {
         showToast("❌ Mükerrer tren numarası var!", true);
+        return;
+    }
+
+    const missingPark = serviceStations.some((_, index) => document.getElementById(`park_${index}`).value === "");
+    if (missingPark) {
+        showToast("❌ Tüm istasyonlar için tren konumu seçilmeli!", true);
         return;
     }
     
