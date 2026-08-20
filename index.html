@@ -74,7 +74,6 @@
       color: var(--text-muted);
       margin-top: 6px;
     }
-    /* Vardiya Grup ve Tarih Bilgi Kutusu (Ana Ekran) - Sağa Yaslı */
     .shift-info-box {
       background: linear-gradient(135deg, #1e1b4b 0%, #311042 100%);
       border: 1px solid #7e22ce;
@@ -83,7 +82,7 @@
       margin-bottom: 16px;
       display: flex;
       align-items: center;
-      justify-content: space-between; /* İçeriği sağa yaslar */
+      justify-content: space-between;
       gap: 10px;
       box-shadow: 0 4px 12px rgba(126, 34, 206, 0.2);
     }
@@ -99,7 +98,6 @@
       border-radius: 6px;
       letter-spacing: 0.5px;
     }
-    /* Ana Ekran Tarih Stili */
     .shift-date-value {
       font-size: 13.5px;
       color: #e2e8f0;
@@ -368,123 +366,110 @@
       display: inline-block;
       margin-top: 2px;
     }
+    .result-col-header {
+      display: grid;
+      grid-template-columns: 104px 1fr;
+      gap: 8px;
+      padding: 0 8px 6px 8px;
+      font-size: 10px;
+      font-weight: 800;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
     .result-list {
       display: flex;
       flex-direction: column;
-      gap: 6px;
-    }
-    .result-row {
-      display: grid;
-      grid-template-columns: 84px 1fr 1.15fr;
-      align-items: center;
-      padding: 7px 8px;
-      background: #f8fafc;
-      border-radius: 6px;
-      border-left: 4px solid var(--accent);
       gap: 8px;
     }
+    .park-group {
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+    }
+    .park-group-header {
+      background: #f3e8f6;
+      border-left: 4px solid var(--accent);
+      padding: 6px 10px;
+      font-size: 11px;
+      font-weight: 800;
+      color: #3b0764;
+      letter-spacing: 0.2px;
+    }
+    .park-group-body {
+      display: flex;
+      flex-direction: column;
+      background: #f8fafc;
+    }
+    .park-group-row {
+      display: grid;
+      grid-template-columns: 104px 1fr;
+      align-items: center;
+      padding: 6px 10px 6px 14px;
+      gap: 8px;
+      border-top: 1px solid #eef0f3;
+    }
+    .park-group-row:first-child { border-top: none; }
+    
     .trn-col {
       display: flex;
       align-items: center;
-      justify-content: flex-start;
-      gap: 5px;
-      width: 84px;
-      flex-shrink: 0;
+      gap: 6px;
     }
     .scada-badge {
-      background-color: #3b14a7;
+      background: #6b215c;
       color: #ffffff;
-      border: 2px solid #fbcfe8;
-      border-radius: 5px;
-      font-weight: 900;
-      font-size: 13px;
-      width: 50px;
-      height: 28px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.28);
-      font-family: 'Consolas', 'Courier New', monospace, sans-serif;
-      flex-shrink: 0;
-    }
-    .radio-slot {
-      width: 26px;
-      height: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      flex-shrink: 0;
+      padding: 3px 7px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      display: inline-block;
     }
     .radio-raw-item {
       display: inline-flex;
       align-items: center;
+      background: #e2e8f0;
+      padding: 2px 4px;
+      border-radius: 4px;
       gap: 2px;
     }
     .radio-raw-item svg {
-      width: 14px;
-      height: 19px;
-      flex-shrink: 0;
+      width: 13px;
+      height: 13px;
     }
-    .radio-raw-item .radio-qty {
-      font-size: 10.5px;
-      font-weight: 900;
+    .radio-qty {
+      font-size: 9.5px;
+      font-weight: 800;
       color: #0f172a;
-      font-family: 'Consolas', 'Segoe UI', sans-serif;
+    }
+
+    .service-flow-container {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .park-group-row .service-title {
+      font-size: 11.5px;
+      font-weight: 800;
+      color: #581c87;
+      background: #fae8ff;
+      padding: 4px 7px;
+      border-radius: 4px;
+      display: inline-block;
+      border: 1px solid #f5d0fe;
+      letter-spacing: -0.1px;
+    }
+
+    .service-arrow {
+      color: #9333ea;
+      font-weight: 900;
+      font-size: 13px;
       line-height: 1;
     }
-    .park-col {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      line-height: 1.2;
-      padding: 0 2px;
-      min-width: 0;
-    }
-    .park-title {
-      color: #1e293b;
-      font-weight: 800;
-      font-size: 11px;
-    }
-    .park-sub {
-      color: #64748b;
-      font-weight: 700;
-      font-size: 9.5px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-top: 1px;
-    }
-    .service-col {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      line-height: 1.2;
-      background: #f3e8f6;
-      border: 1px solid #e2d1e7;
-      padding: 5px 6px;
-      border-radius: 4px;
-      min-width: 0;
-      white-space: nowrap;
-    }
-    .service-title {
-      color: #0f172a;
-      font-weight: 800;
-      font-size: 11px;
-      white-space: nowrap;
-      letter-spacing: -0.2px;
-    }
-    .service-sub {
-      color: #475569;
-      font-weight: 700;
-      font-size: 9.5px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-top: 1px;
-    }
+    
     .result-note-box {
       margin-top: 10px;
       padding: 8px 10px;
@@ -555,7 +540,6 @@
     <p>Tren numaralarını yazıp gece park bölgesini ve telsiz durumunu belirleyerek sevk listesini oluşturun</p>
   </div>
 
-  <!-- YENİ: Ana Ekran Vardiya ve Tarih Göstergesi (Sağa Yaslı) -->
   <div class="shift-info-box">
     <div class="shift-date-value" id="mainDateDisplay">--.--.----</div>
     <div class="shift-info-value" id="mainShiftDisplay">Hesaplanıyor...</div>
@@ -569,9 +553,7 @@
       <div>Telsiz</div>
     </div>
 
-    <div class="grid-table" id="inputRows">
-      <!-- Satırlar JS ile dinamik doldurulacak -->
-    </div>
+    <div class="grid-table" id="inputRows"></div>
 
     <div style="margin-top: 12px;">
       <label style="font-size: 11px; font-weight: 800; color: #94a3b8; display: block; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;">BİLGİLENDİRME NOTU</label>
@@ -600,6 +582,9 @@
           <div class="result-shift-badge" id="resultShiftBadge">--</div>
         </div>
       </div>
+      <div class="result-col-header">
+        <span>TREN NO</span>
+      </div>
       <div class="result-list" id="resultList"></div>
       
       <div id="resultNoteBox" class="result-note-box"></div>
@@ -609,7 +594,6 @@
       <button class="action-btn btn-wa-web" onclick="sendToWhatsAppWeb()">
         💻 Web WhatsApp (Kopyala & Aç)
       </button>
-
       <button class="action-btn btn-wa-mobile" onclick="shareToWhatsAppMobile()">
         📱 Mobil WhatsApp Paylaş
       </button>
@@ -650,9 +634,8 @@
     </svg>
   `;
 
-  // --- VARDİYA HESAPLAMA FONKSİYONU ---
   function calculateCurrentMorningShiftGroup() {
-    const baseDate = new Date(2026, 7, 3); // 3 Ağustos 2026
+    const baseDate = new Date(2026, 7, 3);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -683,7 +666,6 @@
     return `${DD}.${MM}.${YYYY} ${days[now.getDay()]}`;
   }
 
-  // Sayfa açıldığında ana ekrandaki vardiya ve tarihi doldur
   window.addEventListener('DOMContentLoaded', () => {
     document.getElementById("mainShiftDisplay").innerText = calculateCurrentMorningShiftGroup();
     document.getElementById("mainDateDisplay").innerText = getFormattedDateWithDay();
@@ -714,7 +696,7 @@
     "ALTINŞEHİR HAT 1", "ALTINŞEHİR HAT 2", "İMAM HATİP LİSESİ HAT 1", "İMAM HATİP LİSESİ HAT 2",
     "DUDULLU HAT 1", "DUDULLU HAT 2", "NECİP FAZIL HAT 1", "NECİP FAZIL HAT 2",
     "ÇEKMEKÖY HAT 1", "ÇEKMEKÖY HAT 2", "MECLİS HAT 1", "MECLİS HAT 2",
-    "SARIGAZİ HAT 1", "SARIGAZİ HAT 2", "SANCAKTEPE ŞEHİR HASTANESİ HAT 1", "SANCAKTEPE ŞEHİR HASTANESİ HAT 2",
+    "SARIGAZİ HAT 1", "SARIGAZİ HAT 2", "ŞEHİR HASTANESİ HAT 1", "ŞEHİR HASTANESİ HAT 2",
     "SANCAKTEPE HAT 1", "SANCAKTEPE HAT 2", "SAMANDIRA MERKEZ HAT 1", "SAMANDIRA MERKEZ HAT 2",
     "VEYSEL KARANİ HAT 1", "VEYSEL KARANİ HAT 2", "HASANPAŞA HAT 1", "HASANPAŞA HAT 2",
     "SULTANBEYLİ HAT 1", "SULTANBEYLİ HAT 2", "SULTANBEYLİ HAT 1 SONU", "SULTANBEYLİ HAT 2 SONU",
@@ -837,26 +819,24 @@
     return trnValues.some(item => item.val !== "" && counts[item.val] > 1);
   }
 
-  function getStationBase(loc) {
-    return loc.replace(/ HAT 1 SONU| HAT 2 SONU| HAT 1| HAT 2| CEP| ŞEHİR HASTANESİ/g, '')
-              .replace(/ BAĞLANTI YOLU| SAHASI/g, '')
-              .trim();
-  }
-
   function getDateOnlyFileName() {
     const now = new Date();
     return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}.png`;
   }
 
+  function formatServiceName(name) {
+    return name.replace(/ P1$/, " PERON 1 SERVİS").replace(/ P2$/, " PERON 2 SERVİS");
+  }
+
   function generateOutput() {
     if (validateLiveDuplicates()) {
-        showToast("❌ Aynı tren numarası var ayılmak için yüzünü yıka!", true);
+        showToast("❌ Aynı tren numarası var!", true);
         return;
     }
 
     const missingPark = serviceStations.some((_, index) => document.getElementById(`park_${index}`).value === "");
     if (missingPark) {
-        showToast("❌ Tüm istasyonlar için tren konumu seç Bıdık :)", true);
+        showToast("❌ Tüm istasyonlar için tren konumu seçilmeli!", true);
         return;
     }
     
@@ -870,47 +850,89 @@
       rawList.push({
         trn: formatSingleTrn(trnInputEl.value) || "-",
         park: document.getElementById(`park_${index}`).value,
-        service: item.name,
+        service: formatServiceName(item.name),
         hasRadio: hasRadio,
-        radioCount: radioCount,
-        stationBase: getStationBase(document.getElementById(`park_${index}`).value)
+        radioCount: radioCount
       });
     });
 
-    rawList.sort((a, b) => a.stationBase.localeCompare(b.stationBase));
+    // Park bölgelerine göre tren sayılarını hesapla (Yoğunluk tespiti için)
+    const parkCounts = {};
+    rawList.forEach(item => {
+      parkCounts[item.park] = (parkCounts[item.park] || 0) + 1;
+    });
+
+    // Grupları oluştur
+    const groupMap = {};
+    rawList.forEach(item => {
+      if (!groupMap[item.park]) {
+        groupMap[item.park] = [];
+      }
+      groupMap[item.park].push(item);
+    });
+
+    const groups = [];
+    for (const park in groupMap) {
+      groups.push({
+        park: park,
+        count: parkCounts[park],
+        items: groupMap[park]
+      });
+    }
+
+    // EN ÇOK TREN OLAN (YOĞUN OLAN) EN ÜSTTE OLSUN -> Azalan sırada sıralama
+    groups.sort((a, b) => {
+      if (b.count !== a.count) {
+        return b.count - a.count; // Sayıya göre azalan
+      }
+      return a.park.localeCompare(b.park); // Eşitse alfabetik
+    });
 
     const resultListEl = document.getElementById("resultList");
     resultListEl.innerHTML = "";
-    rawList.forEach(item => {
-      const row = document.createElement("div");
-      row.className = "result-row";
-      
-      let radioBadgeHtml = "";
-      if (item.hasRadio) {
-        const countText = parseInt(item.radioCount) > 1 ? `<span class="radio-qty">${item.radioCount}</span>` : "";
-        radioBadgeHtml = `
-          <div class="radio-raw-item" title="${item.radioCount} Adet Telsiz">
-            ${radioSvgDark}
-            ${countText}
+
+    groups.forEach(group => {
+      const groupEl = document.createElement("div");
+      groupEl.className = "park-group";
+
+      const headerEl = document.createElement("div");
+      headerEl.className = "park-group-header";
+      headerEl.innerText = group.park + " - PARK (" + group.count + " Tren)";
+      groupEl.appendChild(headerEl);
+
+      const bodyEl = document.createElement("div");
+      bodyEl.className = "park-group-body";
+
+      group.items.forEach(item => {
+        const row = document.createElement("div");
+        row.className = "park-group-row";
+
+        let radioBadgeHtml = "";
+        if (item.hasRadio) {
+          const countText = parseInt(item.radioCount) > 1 ? `<span class="radio-qty">${item.radioCount}</span>` : "";
+          radioBadgeHtml = `
+            <div class="radio-raw-item" title="${item.radioCount} Adet Telsiz">
+              ${radioSvgDark}
+              ${countText}
+            </div>
+          `;
+        }
+
+        row.innerHTML = `
+          <div class="trn-col">
+            <span class="scada-badge">${item.trn}</span>
+            <div class="radio-slot">${radioBadgeHtml}</div>
+          </div>
+          <div class="service-flow-container">
+            <span class="service-arrow">➔</span>
+            <span class="service-title">${item.service}</span>
           </div>
         `;
-      }
+        bodyEl.appendChild(row);
+      });
 
-      row.innerHTML = `
-        <div class="trn-col">
-          <span class="scada-badge">${item.trn}</span>
-          <div class="radio-slot">${radioBadgeHtml}</div>
-        </div>
-        <div class="park-col">
-          <span class="park-title">${item.park}</span>
-          <span class="park-sub">PARK</span>
-        </div>
-        <div class="service-col">
-          <span class="service-title">${item.service}</span>
-          <span class="service-sub">SERVİS</span>
-        </div>
-      `;
-      resultListEl.appendChild(row);
+      groupEl.appendChild(bodyEl);
+      resultListEl.appendChild(groupEl);
     });
 
     const noteText = document.getElementById("noteInput").value.trim();
