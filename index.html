@@ -74,7 +74,7 @@
       color: var(--text-muted);
       margin-top: 6px;
     }
-    /* Vardiya Grup ve Tarih Bilgi Kutusu (Ana Ekran) */
+    /* Vardiya Grup ve Tarih Bilgi Kutusu (Ana Ekran) - Sağa Yaslı */
     .shift-info-box {
       background: linear-gradient(135deg, #1e1b4b 0%, #311042 100%);
       border: 1px solid #7e22ce;
@@ -83,7 +83,7 @@
       margin-bottom: 16px;
       display: flex;
       align-items: center;
-      justify-content: space-between; /* Sağa ve sola ayrık görünüm */
+      justify-content: space-between; /* İçeriği sağa yaslar */
       gap: 10px;
       box-shadow: 0 4px 12px rgba(126, 34, 206, 0.2);
     }
@@ -99,6 +99,7 @@
       border-radius: 6px;
       letter-spacing: 0.5px;
     }
+    /* Ana Ekran Tarih Stili */
     .shift-date-value {
       font-size: 13.5px;
       color: #e2e8f0;
@@ -154,10 +155,33 @@
     }
     @media (max-width: 720px) {
       .row-item {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+          "badge radio"
+          "trn   park";
         gap: 6px;
+        padding: 7px 8px;
       }
-      .service-badge { grid-column: 1 / -1; }
+      .service-badge {
+        grid-area: badge;
+        white-space: normal;
+        font-size: 11.5px;
+        padding: 7px 8px;
+        display: flex;
+        align-items: center;
+      }
+      .row-item > div:nth-child(2) { grid-area: trn; }
+      .row-item > div:nth-child(3) { grid-area: park; }
+      .radio-control-group {
+        grid-area: radio;
+        justify-self: end;
+        padding: 4px 6px;
+      }
+      .radio-count-input { width: 32px; }
+      .grid-table { gap: 6px; }
+      .card { padding: 10px; margin-bottom: 14px; }
+      .header { margin-bottom: 12px; padding-bottom: 10px; }
+      .shift-info-box { margin-bottom: 12px; padding: 8px 12px; }
     }
     .service-badge {
       font-size: 12.5px;
@@ -212,9 +236,6 @@
       cursor: pointer;
     }
     .park-select option { background: #1e293b; color: #fff; }
-    .park-select.placeholder-active {
-      color: var(--text-muted);
-    }
     .radio-control-group {
       display: flex;
       align-items: center;
@@ -533,13 +554,10 @@
     <p>Tren numaralarını yazıp gece park bölgesini ve telsiz durumunu belirleyerek sevk listesini oluşturun</p>
   </div>
 
-  <!-- Vardiya Grup ve Tarih Göstergesi (Sağlı Sollu Dağıtılmış) -->
+  <!-- YENİ: Ana Ekran Vardiya ve Tarih Göstergesi (Sağa Yaslı) -->
   <div class="shift-info-box">
     <div class="shift-date-value" id="mainDateDisplay">--.--.----</div>
-    <div style="display: flex; align-items: center; gap: 8px;">
-      <span class="shift-info-title"></span>
-      <div class="shift-info-value" id="mainShiftDisplay">Hesaplanıyor...</div>
-    </div>
+    <div class="shift-info-value" id="mainShiftDisplay">Hesaplanıyor...</div>
   </div>
 
   <div class="card">
@@ -664,25 +682,25 @@
     return `${DD}.${MM}.${YYYY} ${days[now.getDay()]}`;
   }
 
+  // Sayfa açıldığında ana ekrandaki vardiya ve tarihi doldur
   window.addEventListener('DOMContentLoaded', () => {
     document.getElementById("mainShiftDisplay").innerText = calculateCurrentMorningShiftGroup();
     document.getElementById("mainDateDisplay").innerText = getFormattedDateWithDay();
   });
 
-  // Varsayılan park yerleri boş (seçilmemiş) olarak ayarlandı, ilk seçenek "Tren Konumunu Seç" olacak
   const serviceStations = [
-    { name: "ÜSKÜDAR P1", defaultTrn: "", defaultPark: "", defaultRadio: false, defaultCount: 1 },
-    { name: "ALTUNİZADE P1", defaultTrn: "", defaultPark: "", defaultRadio: false, defaultCount: 1 },
-    { name: "ÇARŞI P1", defaultTrn: "", defaultPark: "", defaultRadio: false, defaultCount: 1 },
-    { name: "ALTINŞEHİR P1", defaultTrn: "", defaultPark: "", defaultRadio: false, defaultCount: 1 },
-    { name: "ÇEKMEKÖY P1", defaultTrn: "", defaultPark: "", defaultRadio: false, defaultCount: 1 },
-    { name: "SANCAKTEPE P1", defaultTrn: "", defaultPark: "", defaultRadio: false, defaultCount: 1 },
-    { name: "SULTANBEYLİ P1", defaultTrn: "", defaultPark: "", defaultRadio: false, defaultCount: 1 },
-    { name: "SANCAKTEPE P2", defaultTrn: "", defaultPark: "", defaultRadio: false, defaultCount: 1 },
-    { name: "ÇEKMEKÖY P2", defaultTrn: "", defaultPark: "", defaultRadio: false, defaultCount: 1 },
-    { name: "ALTINŞEHİR P2", defaultTrn: "", defaultPark: "", defaultRadio: false, defaultCount: 1 },
-    { name: "ÇARŞI P2", defaultTrn: "", defaultPark: "", defaultRadio: false, defaultCount: 1 },
-    { name: "ALTUNİZADE P2", defaultTrn: "", defaultPark: "", defaultRadio: false, defaultCount: 1 }
+    { name: "ÜSKÜDAR P1", defaultTrn: "", defaultPark: "ÇARŞI HAT 1", defaultRadio: false, defaultCount: 1 },
+    { name: "ALTUNİZADE P1", defaultTrn: "", defaultPark: "ÇARŞI HAT 1", defaultRadio: false, defaultCount: 1 },
+    { name: "ÇARŞI P1", defaultTrn: "", defaultPark: "ÇARŞI HAT 1", defaultRadio: false, defaultCount: 1 },
+    { name: "ALTINŞEHİR P1", defaultTrn: "", defaultPark: "ÇARŞI HAT 1", defaultRadio: false, defaultCount: 1 },
+    { name: "ÇEKMEKÖY P1", defaultTrn: "", defaultPark: "ÇARŞI HAT 2", defaultRadio: false, defaultCount: 1 },
+    { name: "SANCAKTEPE P1", defaultTrn: "", defaultPark: "ÇARŞI HAT 2", defaultRadio: false, defaultCount: 1 },
+    { name: "SULTANBEYLİ P1", defaultTrn: "", defaultPark: "ÇARŞI HAT 2", defaultRadio: false, defaultCount: 1 },
+    { name: "SANCAKTEPE P2", defaultTrn: "", defaultPark: "ÇARŞI HAT 2", defaultRadio: false, defaultCount: 1 },
+    { name: "ÇEKMEKÖY P2", defaultTrn: "", defaultPark: "NECİP FAZIL HAT 1", defaultRadio: false, defaultCount: 1 },
+    { name: "ALTINŞEHİR P2", defaultTrn: "", defaultPark: "NECİP FAZIL HAT 2", defaultRadio: false, defaultCount: 1 },
+    { name: "ÇARŞI P2", defaultTrn: "", defaultPark: "ÇARŞI HAT 2", defaultRadio: false, defaultCount: 1 },
+    { name: "ALTUNİZADE P2", defaultTrn: "", defaultPark: "ÜSKÜDAR HAT 1 SONU", defaultRadio: false, defaultCount: 1 }
   ];
 
   const parkLocations = [
@@ -707,8 +725,7 @@
     const row = document.createElement("div");
     row.className = "row-item";
 
-    // En başa "Tren Konumunu Seç" opsiyonu eklendi
-    let optionsHtml = `<option value="" disabled selected style="color:#94a3b8;">Tren Konumunu Seç</option>`;
+    let optionsHtml = "";
     parkLocations.forEach(loc => {
       const selected = loc === item.defaultPark ? "selected" : "";
       optionsHtml += `<option value="${loc}" ${selected}>${loc}</option>`;
@@ -717,10 +734,10 @@
     row.innerHTML = `
       <div class="service-badge">${item.name}</div>
       <div>
-        <input type="text" inputmode="numeric" id="trn_${index}" class="trn-input" placeholder="Tren No" value="${item.defaultTrn}" oninput="validateLiveDuplicates()">
+        <input type="text" inputmode="numeric" pattern="[0-9]*" id="trn_${index}" class="trn-input" placeholder="Tren No" value="${item.defaultTrn}" oninput="validateLiveDuplicates()">
       </div>
       <div>
-        <select id="park_${index}" class="park-select placeholder-active" onchange="this.classList.remove('placeholder-active')">
+        <select id="park_${index}" class="park-select">
           ${optionsHtml}
         </select>
       </div>
@@ -740,16 +757,12 @@
   function clearAllTrns() {
     serviceStations.forEach((_, index) => {
       const trnInput = document.getElementById(`trn_${index}`);
-      const parkSelect = document.getElementById(`park_${index}`);
       const radioCheck = document.getElementById(`radio_${index}`);
       const countInput = document.getElementById(`count_${index}`);
       
       trnInput.value = "";
       trnInput.classList.remove("input-error");
       
-      parkSelect.selectedIndex = 0;
-      parkSelect.classList.add("placeholder-active");
-
       radioCheck.checked = false;
       countInput.value = "1";
       countInput.disabled = true;
@@ -845,15 +858,13 @@
       const trnInputEl = document.getElementById(`trn_${index}`);
       const hasRadio = document.getElementById(`radio_${index}`).checked;
       const radioCount = document.getElementById(`count_${index}`).value || "1";
-      const parkVal = document.getElementById(`park_${index}`).value;
-      
       rawList.push({
         trn: formatSingleTrn(trnInputEl.value) || "-",
-        park: parkVal !== "" ? parkVal : "BELİRTİLMEDİ",
+        park: document.getElementById(`park_${index}`).value,
         service: item.name,
         hasRadio: hasRadio,
         radioCount: radioCount,
-        stationBase: parkVal !== "" ? getStationBase(parkVal) : "ZZZ"
+        stationBase: getStationBase(document.getElementById(`park_${index}`).value)
       });
     });
 
