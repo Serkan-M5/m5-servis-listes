@@ -850,13 +850,13 @@
 
   function generateOutput() {
     if (validateLiveDuplicates()) {
-        showToast("❌ Mükerrer tren numarası var!", true);
+        showToast("❌ Aynı tren numarası var ayılmak için yüzünü yıka!", true);
         return;
     }
 
     const missingPark = serviceStations.some((_, index) => document.getElementById(`park_${index}`).value === "");
     if (missingPark) {
-        showToast("❌ Tüm istasyonlar için tren konumu seçilmeli!", true);
+        showToast("❌ Tüm istasyonlar için tren konumu seç Bıdık :)", true);
         return;
     }
     
