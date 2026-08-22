@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>M5 Metro Sabah Tren Servis Listesi</title>
   
-  <!-- PWA Manifest Bağlantısı (EN ÖNEMLİ KISIM) -->
+  <!-- PWA Manifest Bağlantısı -->
   <link rel="manifest" href="manifest.json">
   
-  <meta name="theme-color" content="#0b1120">
+  <meta name="theme-color" content="#f1f5f9" id="themeColorMeta">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="M5 Servis">
@@ -41,35 +41,85 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
+    /* Açık Tema Değişkenleri (Varsayılan) */
     :root {
+      --bg: #f1f5f9;
+      --card-bg: #ffffff;
+      --accent: #8b2876;
+      --accent-hover: #6b215c;
+      --wa-green: #25d366;
+      --text: #0f172a;
+      --header-title: #0f172a;
+      --text-muted: #64748b;
+      --border: #cbd5e1;
+      --row-bg: #f8fafc;
+      --input-bg: #ffffff;
+      --input-text: #6b215c;
+      --select-text: #0f172a;
+      --shift-bg: linear-gradient(135deg, #e0e7ff 0%, #fae8ff 100%);
+      --card-out: #ffffff;
+      --out-text: #0f172a;
+    }
+
+    /* Koyu Tema Değişkenleri */
+    [data-theme="dark"] {
       --bg: #0b1120;
       --card-bg: #131d31;
       --accent: #6b215c;
       --accent-hover: #541948;
-      --wa-green: #25d366;
-      --wa-hover: #1ebc57;
       --text: #f8fafc;
+      --header-title: #f1f5f9;
       --text-muted: #94a3b8;
       --border: #23334d;
-      --card-out: #ffffff;
-      --out-text: #0f172a;
+      --row-bg: #0b1120;
+      --input-bg: #1e293b;
+      --input-text: #d8b4e2;
+      --select-text: #f8fafc;
+      --shift-bg: linear-gradient(135deg, #1e1b4b 0%, #311042 100%);
     }
+
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background-color: var(--bg); color: var(--text); padding: 16px 10px; display: flex; justify-content: center; }
-    .wrapper { width: 100%; max-width: 980px; }
-    .header { text-align: center; margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
-    .header h1 { font-size: 20px; font-weight: 800; color: #f1f5f9; display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+    body { background-color: var(--bg); color: var(--text); padding: 16px 10px; display: flex; justify-content: center; transition: background-color 0.3s, color 0.3s; }
+    .wrapper { width: 100%; max-width: 980px; position: relative; }
+    
+    .header { text-align: center; margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid var(--border); position: relative; }
+    .header h1 { font-size: 20px; font-weight: 800; color: var(--header-title); display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
     .m5-circle-logo { background-color: #6b215c; color: #ffffff; width: 32px; height: 32px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 900; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
     .header p { font-size: 12.5px; color: var(--text-muted); margin-top: 6px; }
-    .shift-info-box { background: linear-gradient(135deg, #1e1b4b 0%, #311042 100%); border: 1px solid #7e22ce; border-radius: 10px; padding: 10px 14px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+
+    /* Tema Değiştirme Butonu */
+    .theme-toggle-btn {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      transition: all 0.2s;
+    }
+    .theme-toggle-btn:hover { transform: scale(1.05); }
+
+    .shift-info-box { background: var(--shift-bg); border: 1px solid #7e22ce; border-radius: 10px; padding: 10px 14px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
     .shift-info-value { font-size: 15px; color: #f3e8ff; font-weight: 900; background: #7e22ce; padding: 4px 10px; border-radius: 6px; }
-    .shift-date-value { font-size: 13.5px; color: #e2e8f0; font-weight: 700; background: rgba(255, 255, 255, 0.1); padding: 4px 8px; border-radius: 6px; }
-    .card { background-color: var(--card-bg); border-radius: 12px; padding: 14px; border: 1px solid var(--border); margin-bottom: 18px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3); }
-    .table-header { display: grid; grid-template-columns: 150px 90px 1fr 130px; gap: 8px; padding: 6px 12px 10px 12px; font-size: 12px; font-weight: 800; color: #94a3b8; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 8px; text-align: center; }
+    .shift-date-value { font-size: 13.5px; color: var(--text); font-weight: 700; background: rgba(125, 125, 125, 0.15); padding: 4px 8px; border-radius: 6px; }
+    .card { background-color: var(--card-bg); border-radius: 12px; padding: 14px; border: 1px solid var(--border); margin-bottom: 18px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15); transition: background-color 0.3s, border-color 0.3s; }
+    .table-header { display: grid; grid-template-columns: 150px 90px 1fr 130px; gap: 8px; padding: 6px 12px 10px 12px; font-size: 12px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; border-bottom: 1px solid var(--border); margin-bottom: 8px; text-align: center; }
     .table-header div:nth-child(3) { text-align: left; padding-left: 6px; }
-    @media (max-width: 720px) { .table-header { display: none; } }
+    @media (max-width: 720px) { 
+      .table-header { display: none; }
+      .theme-toggle-btn { position: static; margin: 0 auto 12px auto; width: fit-content; }
+    }
     .grid-table { display: flex; flex-direction: column; gap: 8px; }
-    .row-item { display: grid; grid-template-columns: 150px 90px 1fr 130px; gap: 8px; align-items: center; background: #0b1120; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border); }
+    .row-item { display: grid; grid-template-columns: 150px 90px 1fr 130px; gap: 8px; align-items: center; background: var(--row-bg); padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border); transition: background-color 0.3s; }
     @media (max-width: 720px) {
       .row-item { grid-template-columns: 1fr auto; grid-template-areas: "badge radio" "trn park"; gap: 6px; padding: 7px 8px; }
       .service-badge { grid-area: badge; font-size: 11.5px; padding: 7px 8px; display: flex; align-items: center; }
@@ -77,24 +127,24 @@
       .row-item > div:nth-child(3) { grid-area: park; }
       .radio-control-group { grid-area: radio; justify-self: end; padding: 4px 6px; }
     }
-    .service-badge { font-size: 12.5px; font-weight: 800; color: #f1f5f9; background: #1e293b; padding: 8px 10px; border-radius: 6px; text-align: center; border-left: 4px solid var(--accent); white-space: nowrap; }
-    .trn-input { background: #1e293b; border: 1px solid var(--border); border-radius: 6px; padding: 7px 8px; color: #d8b4e2; font-weight: 700; font-size: 13.5px; outline: none; width: 100%; text-align: center; }
-    .trn-input.input-error { background: rgba(239, 68, 68, 0.2) !important; border: 2px solid #ef4444 !important; color: #ff8b8b !important; }
-    .park-select { background: #1e293b; border: 1px solid var(--border); border-radius: 6px; padding: 7px 8px; color: #f8fafc; font-weight: 600; font-size: 12.5px; outline: none; width: 100%; cursor: pointer; }
-    .park-select option { background: #1e293b; color: #fff; }
-    .radio-control-group { display: flex; align-items: center; justify-content: center; gap: 6px; background: #1e293b; padding: 5px 8px; border-radius: 6px; border: 1px solid var(--border); }
+    .service-badge { font-size: 12.5px; font-weight: 800; color: var(--text); background: var(--input-bg); padding: 8px 10px; border-radius: 6px; text-align: center; border-left: 4px solid var(--accent); white-space: nowrap; border: 1px solid var(--border); border-left-width: 4px; }
+    .trn-input { background: var(--input-bg); border: 1px solid var(--border); border-radius: 6px; padding: 7px 8px; color: var(--input-text); font-weight: 700; font-size: 13.5px; outline: none; width: 100%; text-align: center; }
+    .trn-input.input-error { background: rgba(239, 68, 68, 0.2) !important; border: 2px solid #ef4444 !important; color: #ef4444 !important; }
+    .park-select { background: var(--input-bg); border: 1px solid var(--border); border-radius: 6px; padding: 7px 8px; color: var(--select-text); font-weight: 600; font-size: 12.5px; outline: none; width: 100%; cursor: pointer; }
+    .park-select option { background: var(--card-bg); color: var(--text); }
+    .radio-control-group { display: flex; align-items: center; justify-content: center; gap: 6px; background: var(--input-bg); padding: 5px 8px; border-radius: 6px; border: 1px solid var(--border); }
     .radio-check-wrap { display: flex; align-items: center; gap: 4px; cursor: pointer; }
     .radio-check-wrap input[type="checkbox"] { width: 16px; height: 16px; accent-color: #a855f7; cursor: pointer; }
     .radio-icon-preview { width: 15px; height: 15px; display: inline-flex; align-items: center; justify-content: center; }
-    .radio-count-input { background: #0b1120; border: 1px solid var(--border); border-radius: 4px; color: #f8fafc; font-weight: 700; font-size: 12px; width: 38px; padding: 3px 2px; text-align: center; outline: none; }
+    .radio-count-input { background: var(--row-bg); border: 1px solid var(--border); border-radius: 4px; color: var(--text); font-weight: 700; font-size: 12px; width: 38px; padding: 3px 2px; text-align: center; outline: none; }
     .actions { display: flex; gap: 10px; margin-top: 14px; }
     button { padding: 13px; border-radius: 8px; border: none; font-size: 14.5px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; }
     .btn-primary { flex: 1; background-color: var(--accent); color: white; }
     .btn-primary:hover { background-color: var(--accent-hover); }
-    .btn-secondary { background-color: #334155; color: #f8fafc; padding: 13px 16px; }
-    .btn-secondary:hover { background-color: #475569; }
+    .btn-secondary { background-color: #475569; color: #f8fafc; padding: 13px 16px; }
+    .btn-secondary:hover { background-color: #334155; }
     #outputContainer { display: none; }
-    .result-card { background: var(--card-out); color: var(--out-text); border-radius: 12px; padding: 16px 14px; box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.35); border-top: 6px solid var(--accent); max-width: 540px; margin: 0 auto; }
+    .result-card { background: var(--card-out); color: var(--out-text); border-radius: 12px; padding: 16px 14px; box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.35); border-top: 6px solid #6b215c; max-width: 540px; margin: 0 auto; }
     .result-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 10px; }
     .result-title-wrap { display: flex; align-items: center; gap: 8px; }
     .result-title { font-size: 14px; font-weight: 800; color: #0f172a; }
@@ -104,7 +154,7 @@
     .result-col-header { display: grid; grid-template-columns: 110px 1fr; gap: 8px; padding: 0 8px 6px 8px; font-size: 10px; font-weight: 800; color: #94a3b8; text-transform: uppercase; }
     .result-list { display: flex; flex-direction: column; gap: 8px; }
     .park-group { border-radius: 6px; overflow: hidden; border: 1px solid #e2e8f0; }
-    .park-group-header { background: #f3e8f6; border-left: 4px solid var(--accent); padding: 6px 10px; font-size: 11px; font-weight: 800; color: #3b0764; }
+    .park-group-header { background: #f3e8f6; border-left: 4px solid #6b215c; padding: 6px 10px; font-size: 11px; font-weight: 800; color: #3b0764; }
     .park-group-body { display: flex; flex-direction: column; background: #f8fafc; }
     .park-group-row { display: grid; grid-template-columns: 110px 1fr; align-items: center; padding: 5px 10px 5px 14px; gap: 8px; border-top: 1px solid #eef0f3; }
     .park-group-row:first-child { border-top: none; }
@@ -116,7 +166,7 @@
     .service-flow-container { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
     .park-group-row .service-title { font-size: 11.5px; font-weight: 800; color: #581c87; background: #fae8ff; padding: 3px 6px; border-radius: 4px; border: 1px solid #f5d0fe; }
     .service-arrow { color: #9333ea; font-weight: 900; font-size: 12px; }
-    .result-note-box { margin-top: 10px; padding: 8px 10px; background: #f1f5f9; border-radius: 6px; border-left: 4px solid var(--accent); font-size: 12.5px; color: #0f172a; font-weight: 700; display: none; }
+    .result-note-box { margin-top: 10px; padding: 8px 10px; background: #f1f5f9; border-radius: 6px; border-left: 4px solid #6b215c; font-size: 12.5px; color: #0f172a; font-weight: 700; display: none; }
     .copy-banner { margin-top: 14px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; max-width: 540px; margin-left: auto; margin-right: auto; }
     .action-btn { color: white; padding: 12px 14px; border-radius: 8px; font-size: 13.5px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; border: none; text-decoration: none; text-align: center; gap: 6px; }
     .btn-wa-web { background: #0284c7; }
@@ -129,6 +179,9 @@
 
 <div class="wrapper">
   <div class="header">
+    <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()">
+      <span id="themeIcon">☀️</span> <span id="themeText">Aydınlık Mod</span>
+    </button>
     <h1><span class="m5-circle-logo">M5</span> SABAH TREN SERVİS LİSTESİ</h1>
     <p>Tren numaralarını yazıp gece park bölgesini ve telsiz durumunu belirleyerek sevk listesini oluşturun</p>
   </div>
@@ -149,7 +202,7 @@
     <div class="grid-table" id="inputRows"></div>
 
     <div style="margin-top: 12px;">
-      <label style="font-size: 11px; font-weight: 800; color: #94a3b8; display: block; margin-bottom: 4px; text-transform: uppercase;">BİLGİLENDİRME NOTU</label>
+      <label style="font-size: 11px; font-weight: 800; color: var(--text-muted); display: block; margin-bottom: 4px; text-transform: uppercase;">BİLGİLENDİRME NOTU</label>
       <textarea id="noteInput" class="trn-input" style="height: 55px; text-align: left; resize: vertical;" placeholder="Listeye eklemek istediğiniz notu buraya yazın..." autocomplete="off"></textarea>
     </div>
 
@@ -191,6 +244,41 @@
       navigator.serviceWorker.register('sw.js').catch(err => console.log('SW hatası:', err));
     });
   }
+
+  /* Tema Yönetimi (Varsayılan Aydınlık Mod) */
+  function initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      setTheme(savedTheme);
+    } else {
+      setTheme('light');
+    }
+  }
+
+  function setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    const themeIcon = document.getElementById('themeIcon');
+    const themeText = document.getElementById('themeText');
+    const themeMeta = document.getElementById('themeColorMeta');
+    
+    if (theme === 'dark') {
+      themeIcon.innerText = '🌙';
+      themeText.innerText = 'Karanlık';
+      themeMeta.setAttribute('content', '#0b1120');
+    } else {
+      themeIcon.innerText = '☀️';
+      themeText.innerText = 'Aydınlık';
+      themeMeta.setAttribute('content', '#f1f5f9');
+    }
+  }
+
+  function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+  }
+
+  initTheme();
 
   const radioSvgDark = `<svg viewBox="0 0 24 24" fill="none" stroke="#0f172a"><path d="M7 6V2" stroke="#0f172a" stroke-width="2.6" stroke-linecap="round"/><path d="M12 6V3.8" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/><rect x="4" y="6" width="11" height="16" rx="2.5" fill="#0f172a" stroke="#0f172a" stroke-width="1"/><rect x="2.2" y="9" width="1.8" height="4.5" rx="0.6" fill="#0f172a"/><line x1="6.5" y1="9.5" x2="12.5" y2="9.5" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/><line x1="6.5" y1="12" x2="12.5" y2="12" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/><line x1="6.5" y1="14.5" x2="12.5" y2="14.5" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/><rect x="6.5" y="17" width="6" height="2" rx="0.4" fill="#ffffff"/><path d="M17.5 9.5C18.8 11 18.8 13.5 17.5 15" stroke="#0f172a" stroke-width="2.2" stroke-linecap="round"/><path d="M20.5 7.5C22.8 10 22.8 15 20.5 17.5" stroke="#0f172a" stroke-width="2.2" stroke-linecap="round"/></svg>`;
 
