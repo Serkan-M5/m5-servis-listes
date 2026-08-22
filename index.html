@@ -4,12 +4,48 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>M5 Metro Sabah Tren Servis Listesi</title>
+  
+  <meta name="theme-color" content="#0b1120">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="M5 Servis">
+
+  <!-- Dinamik İkonlar için Canvas Üreticisi -->
+  <script>
+    function generateDynamicIcons() {
+      [192, 512].forEach(size => {
+        const canvas = document.createElement('canvas');
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext('2d');
+        
+        // Mor Arka Plan (M5 Rengi)
+        ctx.fillStyle = '#6b215c';
+        ctx.fillRect(0, 0, size, size);
+        
+        // Beyaz Metin (M5)
+        ctx.fillStyle = '#ffffff';
+        ctx.font = `bold ${size * 0.45}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('M5', size / 2, size / 2);
+        
+        const link = document.createElement('link');
+        link.rel = 'apple-touch-icon';
+        link.sizes = `${size}x${size}`;
+        link.href = canvas.toDataURL('image/png');
+        document.head.appendChild(link);
+      });
+    }
+    generateDynamicIcons();
+  </script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
     :root {
       --bg: #0b1120;
       --card-bg: #131d31;
-      --accent: #6b215c;         /* M5 Moru */
+      --accent: #6b215c;
       --accent-hover: #541948;
       --error-bg: #ef4444;
       --wa-green: #25d366;
@@ -20,516 +56,76 @@
       --card-out: #ffffff;
       --out-text: #0f172a;
     }
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    }
-    body {
-      background-color: var(--bg);
-      color: var(--text);
-      padding: 16px 10px;
-      display: flex;
-      justify-content: center;
-    }
-    .wrapper {
-      width: 100%;
-      max-width: 980px;
-    }
-    .header {
-      text-align: center;
-      margin-bottom: 18px;
-      padding-bottom: 14px;
-      border-bottom: 1px solid var(--border);
-    }
-    .header h1 {
-      font-size: 20px;
-      font-weight: 800;
-      letter-spacing: 0.5px;
-      color: #f1f5f9;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .m5-circle-logo {
-      background-color: #6b215c;
-      color: #ffffff;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 15px;
-      font-weight: 900;
-      letter-spacing: -0.5px;
-      flex-shrink: 0;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-    }
-    .header p {
-      font-size: 12.5px;
-      color: var(--text-muted);
-      margin-top: 6px;
-    }
-    .shift-info-box {
-      background: linear-gradient(135deg, #1e1b4b 0%, #311042 100%);
-      border: 1px solid #7e22ce;
-      border-radius: 10px;
-      padding: 10px 14px;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      box-shadow: 0 4px 12px rgba(126, 34, 206, 0.2);
-    }
-    .shift-info-title {
-      font-size: 15px;
-    }
-    .shift-info-value {
-      font-size: 15px;
-      color: #f3e8ff;
-      font-weight: 900;
-      background: #7e22ce;
-      padding: 4px 10px;
-      border-radius: 6px;
-      letter-spacing: 0.5px;
-    }
-    .shift-date-value {
-      font-size: 13.5px;
-      color: #e2e8f0;
-      font-weight: 700;
-      background: rgba(255, 255, 255, 0.1);
-      padding: 4px 8px;
-      border-radius: 6px;
-    }
-    .card {
-      background-color: var(--card-bg);
-      border-radius: 12px;
-      padding: 14px;
-      border: 1px solid var(--border);
-      margin-bottom: 18px;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-    }
-    .table-header {
-      display: grid;
-      grid-template-columns: 150px 90px 1fr 130px;
-      gap: 8px;
-      padding: 6px 12px 10px 12px;
-      font-size: 12px;
-      font-weight: 800;
-      color: #94a3b8;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      margin-bottom: 8px;
-      text-align: center;
-    }
-    .table-header div:nth-child(3) {
-      text-align: left;
-      padding-left: 6px;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding: 16px 10px; display: flex; justify-content: center; }
+    .wrapper { width: 100%; max-width: 980px; }
+    .header { text-align: center; margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+    .header h1 { font-size: 20px; font-weight: 800; color: #f1f5f9; display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+    .m5-circle-logo { background-color: #6b215c; color: #ffffff; width: 32px; height: 32px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 900; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
+    .header p { font-size: 12.5px; color: var(--text-muted); margin-top: 6px; }
+    .shift-info-box { background: linear-gradient(135deg, #1e1b4b 0%, #311042 100%); border: 1px solid #7e22ce; border-radius: 10px; padding: 10px 14px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .shift-info-title { font-size: 15px; }
+    .shift-info-value { font-size: 15px; color: #f3e8ff; font-weight: 900; background: #7e22ce; padding: 4px 10px; border-radius: 6px; }
+    .shift-date-value { font-size: 13.5px; color: #e2e8f0; font-weight: 700; background: rgba(255, 255, 255, 0.1); padding: 4px 8px; border-radius: 6px; }
+    .card { background-color: var(--card-bg); border-radius: 12px; padding: 14px; border: 1px solid var(--border); margin-bottom: 18px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3); }
+    .table-header { display: grid; grid-template-columns: 150px 90px 1fr 130px; gap: 8px; padding: 6px 12px 10px 12px; font-size: 12px; font-weight: 800; color: #94a3b8; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 8px; text-align: center; }
+    .table-header div:nth-child(3) { text-align: left; padding-left: 6px; }
+    @media (max-width: 720px) { .table-header { display: none; } }
+    .grid-table { display: flex; flex-direction: column; gap: 8px; }
+    .row-item { display: grid; grid-template-columns: 150px 90px 1fr 130px; gap: 8px; align-items: center; background: #0b1120; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border); }
     @media (max-width: 720px) {
-      .table-header { display: none; }
-    }
-    .grid-table {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .row-item {
-      display: grid;
-      grid-template-columns: 150px 90px 1fr 130px;
-      gap: 8px;
-      align-items: center;
-      background: #0b1120;
-      padding: 8px 10px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      transition: all 0.2s ease;
-    }
-    @media (max-width: 720px) {
-      .row-item {
-        grid-template-columns: 1fr auto;
-        grid-template-areas:
-          "badge radio"
-          "trn   park";
-        gap: 6px;
-        padding: 7px 8px;
-      }
-      .service-badge {
-        grid-area: badge;
-        white-space: normal;
-        font-size: 11.5px;
-        padding: 7px 8px;
-        display: flex;
-        align-items: center;
-      }
+      .row-item { grid-template-columns: 1fr auto; grid-template-areas: "badge radio" "trn park"; gap: 6px; padding: 7px 8px; }
+      .service-badge { grid-area: badge; font-size: 11.5px; padding: 7px 8px; display: flex; align-items: center; }
       .row-item > div:nth-child(2) { grid-area: trn; }
       .row-item > div:nth-child(3) { grid-area: park; }
-      .radio-control-group {
-        grid-area: radio;
-        justify-self: end;
-        padding: 4px 6px;
-      }
-      .radio-count-input { width: 32px; }
-      .grid-table { gap: 6px; }
-      .card { padding: 10px; margin-bottom: 14px; }
-      .header { margin-bottom: 12px; padding-bottom: 10px; }
-      .shift-info-box { margin-bottom: 12px; padding: 8px 12px; }
+      .radio-control-group { grid-area: radio; justify-self: end; padding: 4px 6px; }
     }
-    .service-badge {
-      font-size: 12.5px;
-      font-weight: 800;
-      color: #f1f5f9;
-      background: #1e293b;
-      padding: 8px 10px;
-      border-radius: 6px;
-      text-align: center;
-      letter-spacing: 0.3px;
-      border-left: 4px solid var(--accent);
-      white-space: nowrap;
-    }
-    .trn-input {
-      background: #1e293b;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 7px 8px;
-      color: #d8b4e2;
-      font-weight: 700;
-      font-size: 13.5px;
-      outline: none;
-      width: 100%;
-      text-align: center;
-      transition: all 0.2s ease;
-    }
-    .trn-input:focus, .park-select:focus, .radio-count-input:focus {
-      border-color: #d8b4e2;
-    }
-    .trn-input.input-error {
-      background: rgba(239, 68, 68, 0.2) !important;
-      border: 2px solid #ef4444 !important;
-      color: #ff8b8b !important;
-      box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
-      animation: shake 0.3s ease;
-    }
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-4px); }
-      75% { transform: translateX(4px); }
-    }
-    .park-select {
-      background: #1e293b;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 7px 8px;
-      color: #f8fafc;
-      font-weight: 600;
-      font-size: 12.5px;
-      outline: none;
-      width: 100%;
-      cursor: pointer;
-    }
+    .service-badge { font-size: 12.5px; font-weight: 800; color: #f1f5f9; background: #1e293b; padding: 8px 10px; border-radius: 6px; text-align: center; border-left: 4px solid var(--accent); white-space: nowrap; }
+    .trn-input { background: #1e293b; border: 1px solid var(--border); border-radius: 6px; padding: 7px 8px; color: #d8b4e2; font-weight: 700; font-size: 13.5px; outline: none; width: 100%; text-align: center; }
+    .trn-input.input-error { background: rgba(239, 68, 68, 0.2) !important; border: 2px solid #ef4444 !important; color: #ff8b8b !important; }
+    .park-select { background: #1e293b; border: 1px solid var(--border); border-radius: 6px; padding: 7px 8px; color: #f8fafc; font-weight: 600; font-size: 12.5px; outline: none; width: 100%; cursor: pointer; }
     .park-select option { background: #1e293b; color: #fff; }
-    .park-select:invalid { color: var(--text-muted); font-weight: 600; }
-    .radio-control-group {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      background: #1e293b;
-      padding: 5px 8px;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-    }
-    .radio-check-wrap {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      cursor: pointer;
-      user-select: none;
-    }
-    .radio-check-wrap input[type="checkbox"] {
-      width: 16px;
-      height: 16px;
-      accent-color: #a855f7;
-      cursor: pointer;
-    }
-    .radio-icon-preview {
-      width: 15px;
-      height: 15px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .radio-count-input {
-      background: #0b1120;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      color: #f8fafc;
-      font-weight: 700;
-      font-size: 12px;
-      width: 38px;
-      padding: 3px 2px;
-      text-align: center;
-      outline: none;
-    }
-    .actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 14px;
-    }
-    button {
-      padding: 13px;
-      border-radius: 8px;
-      border: none;
-      font-size: 14.5px;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: all 0.2s ease;
-    }
-    .btn-primary {
-      flex: 1;
-      background-color: var(--accent);
-      color: white;
-    }
-    .btn-primary:hover {
-      background-color: var(--accent-hover);
-      transform: translateY(-1px);
-    }
-    .btn-secondary {
-      background-color: #334155;
-      color: #f8fafc;
-      padding: 13px 16px;
-    }
-    .btn-secondary:hover {
-      background-color: #475569;
-      transform: translateY(-1px);
-    }
+    .radio-control-group { display: flex; align-items: center; justify-content: center; gap: 6px; background: #1e293b; padding: 5px 8px; border-radius: 6px; border: 1px solid var(--border); }
+    .radio-check-wrap { display: flex; align-items: center; gap: 4px; cursor: pointer; }
+    .radio-check-wrap input[type="checkbox"] { width: 16px; height: 16px; accent-color: #a855f7; cursor: pointer; }
+    .radio-icon-preview { width: 15px; height: 15px; display: inline-flex; align-items: center; justify-content: center; }
+    .radio-count-input { background: #0b1120; border: 1px solid var(--border); border-radius: 4px; color: #f8fafc; font-weight: 700; font-size: 12px; width: 38px; padding: 3px 2px; text-align: center; outline: none; }
+    .actions { display: flex; gap: 10px; margin-top: 14px; }
+    button { padding: 13px; border-radius: 8px; border: none; font-size: 14.5px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; }
+    .btn-primary { flex: 1; background-color: var(--accent); color: white; }
+    .btn-primary:hover { background-color: var(--accent-hover); }
+    .btn-secondary { background-color: #334155; color: #f8fafc; padding: 13px 16px; }
+    .btn-secondary:hover { background-color: #475569; }
     #outputContainer { display: none; }
-    .result-card {
-      background: var(--card-out);
-      color: var(--out-text);
-      border-radius: 12px;
-      padding: 16px 14px;
-      box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.35);
-      border-top: 6px solid var(--accent);
-      max-width: 540px;
-      margin: 0 auto;
-    }
-    .result-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 2px solid #e2e8f0;
-      padding-bottom: 8px;
-      margin-bottom: 10px;
-    }
-    .result-title-wrap {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .result-title-wrap .m5-circle-logo {
-      width: 26px;
-      height: 26px;
-      font-size: 12.5px;
-    }
-    .result-title {
-      font-size: 14px;
-      font-weight: 800;
-      color: #0f172a;
-      letter-spacing: 0.3px;
-    }
-    .result-date-area {
-      text-align: right;
-    }
-    .result-date {
-      font-size: 11.5px;
-      font-weight: 800;
-      color: #475569;
-    }
-    .result-shift-badge {
-      font-size: 10.5px;
-      font-weight: 800;
-      color: #6b215c;
-      background: #f3e8f6;
-      padding: 2px 6px;
-      border-radius: 4px;
-      display: inline-block;
-      margin-top: 2px;
-    }
-    .result-col-header {
-      display: grid;
-      grid-template-columns: 104px 1fr;
-      gap: 8px;
-      padding: 0 8px 6px 8px;
-      font-size: 10px;
-      font-weight: 800;
-      color: #94a3b8;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-    }
-    .result-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .park-group {
-      border-radius: 6px;
-      overflow: hidden;
-      border: 1px solid #e2e8f0;
-    }
-    .park-group-header {
-      background: #f3e8f6;
-      border-left: 4px solid var(--accent);
-      padding: 6px 10px;
-      font-size: 11px;
-      font-weight: 800;
-      color: #3b0764;
-      letter-spacing: 0.2px;
-    }
-    .park-group-body {
-      display: flex;
-      flex-direction: column;
-      background: #f8fafc;
-    }
-    .park-group-row {
-      display: grid;
-      grid-template-columns: 104px 1fr;
-      align-items: center;
-      padding: 6px 10px 6px 14px;
-      gap: 8px;
-      border-top: 1px solid #eef0f3;
-    }
+    .result-card { background: var(--card-out); color: var(--out-text); border-radius: 12px; padding: 16px 14px; box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.35); border-top: 6px solid var(--accent); max-width: 540px; margin: 0 auto; }
+    .result-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 10px; }
+    .result-title-wrap { display: flex; align-items: center; gap: 8px; }
+    .result-title { font-size: 14px; font-weight: 800; color: #0f172a; }
+    .result-date-area { text-align: right; }
+    .result-date { font-size: 11.5px; font-weight: 800; color: #475569; }
+    .result-shift-badge { font-size: 10.5px; font-weight: 800; color: #6b215c; background: #f3e8f6; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-top: 2px; }
+    .result-col-header { display: grid; grid-template-columns: 110px 1fr; gap: 8px; padding: 0 8px 6px 8px; font-size: 10px; font-weight: 800; color: #94a3b8; text-transform: uppercase; }
+    .result-list { display: flex; flex-direction: column; gap: 8px; }
+    .park-group { border-radius: 6px; overflow: hidden; border: 1px solid #e2e8f0; }
+    .park-group-header { background: #f3e8f6; border-left: 4px solid var(--accent); padding: 6px 10px; font-size: 11px; font-weight: 800; color: #3b0764; }
+    .park-group-body { display: flex; flex-direction: column; background: #f8fafc; }
+    .park-group-row { display: grid; grid-template-columns: 110px 1fr; align-items: center; padding: 5px 10px 5px 14px; gap: 8px; border-top: 1px solid #eef0f3; }
     .park-group-row:first-child { border-top: none; }
-    
-    .trn-col {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .scada-badge {
-      background: #6b215c;
-      color: #ffffff;
-      padding: 3px 7px;
-      border-radius: 4px;
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.5px;
-      display: inline-block;
-    }
-    .radio-raw-item {
-      display: inline-flex;
-      align-items: center;
-      background: #e2e8f0;
-      padding: 2px 4px;
-      border-radius: 4px;
-      gap: 2px;
-    }
-    .radio-raw-item svg {
-      width: 13px;
-      height: 13px;
-    }
-    .radio-qty {
-      font-size: 9.5px;
-      font-weight: 800;
-      color: #0f172a;
-    }
-
-    .service-flow-container {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    .park-group-row .service-title {
-      font-size: 11.5px;
-      font-weight: 800;
-      color: #581c87;
-      background: #fae8ff;
-      padding: 4px 7px;
-      border-radius: 4px;
-      display: inline-block;
-      border: 1px solid #f5d0fe;
-      letter-spacing: -0.1px;
-    }
-
-    .service-arrow {
-      color: #9333ea;
-      font-weight: 900;
-      font-size: 13px;
-      line-height: 1;
-    }
-    
-    .result-note-box {
-      margin-top: 10px;
-      padding: 8px 10px;
-      background: #f1f5f9;
-      border-radius: 6px;
-      border-left: 4px solid var(--accent);
-      font-size: 12.5px;
-      color: #0f172a;
-      font-weight: 700;
-      line-height: 1.4;
-      display: none;
-      word-break: break-word;
-    }
-    .copy-banner {
-      margin-top: 14px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 10px;
-      max-width: 540px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .action-btn {
-      color: white;
-      padding: 12px 14px;
-      border-radius: 8px;
-      font-size: 13.5px;
-      font-weight: 700;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      border: none;
-      transition: 0.2s;
-      text-decoration: none;
-      text-align: center;
-      gap: 6px;
-    }
+    .trn-col { display: flex; align-items: center; gap: 6px; }
+    .scada-badge { color: #ffffff; background: #2319c5; border: 2px solid #fbcfe8; padding: 3px 8px; border-radius: 6px; font-size: 13.5px; font-weight: 950; }
+    .radio-raw-item { display: inline-flex; align-items: center; background: #f1f5f9; border: 1px solid #e2e8f0; padding: 1px 4px; border-radius: 4px; gap: 2px; }
+    .radio-raw-item svg { width: 12px; height: 12px; }
+    .radio-qty { font-size: 9.5px; font-weight: 900; color: #0f172a; }
+    .service-flow-container { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .park-group-row .service-title { font-size: 11.5px; font-weight: 800; color: #581c87; background: #fae8ff; padding: 3px 6px; border-radius: 4px; border: 1px solid #f5d0fe; }
+    .service-arrow { color: #9333ea; font-weight: 900; font-size: 12px; }
+    .result-note-box { margin-top: 10px; padding: 8px 10px; background: #f1f5f9; border-radius: 6px; border-left: 4px solid var(--accent); font-size: 12.5px; color: #0f172a; font-weight: 700; display: none; }
+    .copy-banner { margin-top: 14px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; max-width: 540px; margin-left: auto; margin-right: auto; }
+    .action-btn { color: white; padding: 12px 14px; border-radius: 8px; font-size: 13.5px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; border: none; text-decoration: none; text-align: center; gap: 6px; }
     .btn-wa-web { background: #0284c7; }
-    .btn-wa-web:hover { background: #0369a1; }
     .btn-wa-mobile { background: var(--wa-green); }
-    .btn-wa-mobile:hover { background: var(--wa-hover); }
-    .toast {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #10b981;
-      color: white;
-      padding: 12px 20px;
-      border-radius: 8px;
-      font-weight: 700;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      display: none;
-      z-index: 100;
-      font-size: 13.5px;
-    }
-    .toast.toast-error {
-      background: #ef4444 !important;
-      box-shadow: 0 4px 15px rgba(239, 68, 68, 0.5);
-    }
+    .toast { position: fixed; bottom: 20px; right: 20px; background: #10b981; color: white; padding: 12px 20px; border-radius: 8px; font-weight: 700; box-shadow: 0 4px 12px rgba(0,0,0,0.3); display: none; z-index: 100; font-size: 13.5px; }
+    .toast.toast-error { background: #ef4444 !important; }
   </style>
 </head>
 <body>
@@ -556,17 +152,13 @@
     <div class="grid-table" id="inputRows"></div>
 
     <div style="margin-top: 12px;">
-      <label style="font-size: 11px; font-weight: 800; color: #94a3b8; display: block; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;">BİLGİLENDİRME NOTU</label>
-      <textarea id="noteInput" class="trn-input" style="height: 55px; text-align: left; resize: vertical;" placeholder="Listeye eklemek istediğiniz notu buraya yazın..." autocomplete="off" autocorrect="off" spellcheck="false" data-lpignore="true"></textarea>
+      <label style="font-size: 11px; font-weight: 800; color: #94a3b8; display: block; margin-bottom: 4px; text-transform: uppercase;">BİLGİLENDİRME NOTU</label>
+      <textarea id="noteInput" class="trn-input" style="height: 55px; text-align: left; resize: vertical;" placeholder="Listeye eklemek istediğiniz notu buraya yazın..." autocomplete="off"></textarea>
     </div>
 
     <div class="actions">
-      <button class="action-btn btn-secondary" onclick="clearAllTrns()" title="Tüm tren numaralarını ve telsiz seçimlerini temizle">
-        🧹 Temizle
-      </button>
-      <button class="btn-primary" onclick="generateOutput()">
-        ⚡ Sevk Listesini Oluştur
-      </button>
+      <button class="action-btn btn-secondary" onclick="clearAllTrns()">🧹 Temizle</button>
+      <button class="btn-primary" onclick="generateOutput()">⚡ Sevk Listesini Oluştur</button>
     </div>
   </div>
 
@@ -582,21 +174,14 @@
           <div class="result-shift-badge" id="resultShiftBadge">--</div>
         </div>
       </div>
-      <div class="result-col-header">
-        <span>TREN NO</span>
-      </div>
+      <div class="result-col-header"><span>TREN NO</span></div>
       <div class="result-list" id="resultList"></div>
-      
       <div id="resultNoteBox" class="result-note-box"></div>
     </div>
     
     <div class="copy-banner">
-      <button class="action-btn btn-wa-web" onclick="sendToWhatsAppWeb()">
-        💻 Web WhatsApp (Kopyala & Aç)
-      </button>
-      <button class="action-btn btn-wa-mobile" onclick="shareToWhatsAppMobile()">
-        📱 Mobil WhatsApp Paylaş
-      </button>
+      <button class="action-btn btn-wa-web" onclick="sendToWhatsAppWeb()">💻 Web WhatsApp (Kopyala & Aç)</button>
+      <button class="action-btn btn-wa-mobile" onclick="shareToWhatsAppMobile()">📱 Mobil WhatsApp Paylaş</button>
     </div>
   </div>
 </div>
@@ -604,56 +189,22 @@
 <div class="toast" id="toast"></div>
 
 <script>
-  const radioSvgDark = `
-    <svg viewBox="0 0 24 24" fill="none" stroke="#0f172a">
-      <path d="M7 6V2" stroke="#0f172a" stroke-width="2.6" stroke-linecap="round"/>
-      <path d="M12 6V3.8" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/>
-      <rect x="4" y="6" width="11" height="16" rx="2.5" fill="#0f172a" stroke="#0f172a" stroke-width="1"/>
-      <rect x="2.2" y="9" width="1.8" height="4.5" rx="0.6" fill="#0f172a"/>
-      <line x1="6.5" y1="9.5" x2="12.5" y2="9.5" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
-      <line x1="6.5" y1="12" x2="12.5" y2="12" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
-      <line x1="6.5" y1="14.5" x2="12.5" y2="14.5" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
-      <rect x="6.5" y="17" width="6" height="2" rx="0.4" fill="#ffffff"/>
-      <path d="M17.5 9.5C18.8 11 18.8 13.5 17.5 15" stroke="#0f172a" stroke-width="2.2" stroke-linecap="round"/>
-      <path d="M20.5 7.5C22.8 10 22.8 15 20.5 17.5" stroke="#0f172a" stroke-width="2.2" stroke-linecap="round"/>
-    </svg>
-  `;
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(err => console.log('SW hatası:', err));
+    });
+  }
 
-  const radioSvgLight = `
-    <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff">
-      <path d="M7 6V2" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round"/>
-      <path d="M12 6V3.8" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
-      <rect x="4" y="6" width="11" height="16" rx="2.5" fill="#ffffff" stroke="#ffffff" stroke-width="1"/>
-      <rect x="2.2" y="9" width="1.8" height="4.5" rx="0.6" fill="#ffffff"/>
-      <line x1="6.5" y1="9.5" x2="12.5" y2="9.5" stroke="#0f172a" stroke-width="1.5" stroke-linecap="round"/>
-      <line x1="6.5" y1="12" x2="12.5" y2="12" stroke="#0f172a" stroke-width="1.5" stroke-linecap="round"/>
-      <line x1="6.5" y1="14.5" x2="12.5" y2="14.5" stroke="#0f172a" stroke-width="1.5" stroke-linecap="round"/>
-      <rect x="6.5" y="17" width="6" height="2" rx="0.4" fill="#0f172a"/>
-      <path d="M17.5 9.5C18.8 11 18.8 13.5 17.5 15" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"/>
-      <path d="M20.5 7.5C22.8 10 22.8 15 20.5 17.5" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"/>
-    </svg>
-  `;
+  const radioSvgDark = `<svg viewBox="0 0 24 24" fill="none" stroke="#0f172a"><path d="M7 6V2" stroke="#0f172a" stroke-width="2.6" stroke-linecap="round"/><path d="M12 6V3.8" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/><rect x="4" y="6" width="11" height="16" rx="2.5" fill="#0f172a" stroke="#0f172a" stroke-width="1"/><rect x="2.2" y="9" width="1.8" height="4.5" rx="0.6" fill="#0f172a"/><line x1="6.5" y1="9.5" x2="12.5" y2="9.5" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/><line x1="6.5" y1="12" x2="12.5" y2="12" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/><line x1="6.5" y1="14.5" x2="12.5" y2="14.5" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/><rect x="6.5" y="17" width="6" height="2" rx="0.4" fill="#ffffff"/><path d="M17.5 9.5C18.8 11 18.8 13.5 17.5 15" stroke="#0f172a" stroke-width="2.2" stroke-linecap="round"/><path d="M20.5 7.5C22.8 10 22.8 15 20.5 17.5" stroke="#0f172a" stroke-width="2.2" stroke-linecap="round"/></svg>`;
 
   function calculateCurrentMorningShiftGroup() {
     const baseDate = new Date(2026, 7, 3);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-
-    const diffTime = today - baseDate;
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-
-    if (diffDays < 0) {
-      const mod = (diffDays % 12 + 12) % 12;
-      return getGroupFromCycleDay(mod);
-    } else {
-      const mod = diffDays % 12;
-      return getGroupFromCycleDay(mod);
-    }
-  }
-
-  function getGroupFromCycleDay(dayIndex) {
-    if (dayIndex >= 0 && dayIndex <= 3) return "1. Grup (Sabah Vardiyası)";
-    if (dayIndex >= 4 && dayIndex <= 7) return "2. Grup (Sabah Vardiyası)";
+    const diffDays = Math.floor((today - baseDate) / (1000 * 60 * 60 * 24));
+    const mod = (diffDays % 12 + 12) % 12;
+    if (mod >= 0 && mod <= 3) return "1. Grup (Sabah Vardiyası)";
+    if (mod >= 4 && mod <= 7) return "2. Grup (Sabah Vardiyası)";
     return "3. Grup (Sabah Vardiyası)";
   }
 
@@ -707,30 +258,16 @@
   serviceStations.forEach((item, index) => {
     const row = document.createElement("div");
     row.className = "row-item";
-
     let optionsHtml = `<option value="" disabled selected>Tren Konumunu Seç</option>`;
-    parkLocations.forEach(loc => {
-      optionsHtml += `<option value="${loc}">${loc}</option>`;
-    });
+    parkLocations.forEach(loc => { optionsHtml += `<option value="${loc}">${loc}</option>`; });
 
     row.innerHTML = `
       <div class="service-badge">${item.name}</div>
-      <div>
-        <input type="text" inputmode="numeric" pattern="[0-9]*" id="trn_${index}" class="trn-input" placeholder="Tren No" value="${item.defaultTrn}" oninput="validateLiveDuplicates()" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-lpignore="true">
-      </div>
-      <div>
-        <select id="park_${index}" class="park-select" required>
-          ${optionsHtml}
-        </select>
-      </div>
+      <div><input type="text" inputmode="numeric" pattern="[0-9]*" id="trn_${index}" class="trn-input" placeholder="Tren No" value="${item.defaultTrn}" oninput="validateLiveDuplicates()" autocomplete="off"></div>
+      <div><select id="park_${index}" class="park-select" required>${optionsHtml}</select></div>
       <div class="radio-control-group">
-        <label class="radio-check-wrap" title="Telsiz var/yok">
-          <input type="checkbox" id="radio_${index}" ${item.defaultRadio ? "checked" : ""} onchange="toggleRadioCount(${index})">
-          <div class="radio-icon-preview">
-            ${radioSvgLight}
-          </div>
-        </label>
-        <input type="number" id="count_${index}" class="radio-count-input" value="${item.defaultCount}" min="1" max="9" title="Telsiz Adedi" ${!item.defaultRadio ? "disabled style='opacity:0.3;'" : ""}>
+        <label class="radio-check-wrap"><input type="checkbox" id="radio_${index}" ${item.defaultRadio ? "checked" : ""} onchange="toggleRadioCount(${index})"><div class="radio-icon-preview">${radioSvgDark}</div></label>
+        <input type="number" id="count_${index}" class="radio-count-input" value="${item.defaultCount}" min="1" max="9" ${!item.defaultRadio ? "disabled style='opacity:0.3;'" : ""}>
       </div>
     `;
     inputContainer.appendChild(row);
@@ -738,25 +275,17 @@
 
   function clearAllTrns() {
     serviceStations.forEach((_, index) => {
-      const trnInput = document.getElementById(`trn_${index}`);
-      const radioCheck = document.getElementById(`radio_${index}`);
-      const countInput = document.getElementById(`count_${index}`);
-      const parkSelect = document.getElementById(`park_${index}`);
-
-      trnInput.value = "";
-      trnInput.classList.remove("input-error");
-
-      parkSelect.selectedIndex = 0;
-      
-      radioCheck.checked = false;
-      countInput.value = "1";
-      countInput.disabled = true;
-      countInput.style.opacity = "0.3";
+      document.getElementById(`trn_${index}`).value = "";
+      document.getElementById(`trn_${index}`).classList.remove("input-error");
+      document.getElementById(`park_${index}`).selectedIndex = 0;
+      document.getElementById(`radio_${index}`).checked = false;
+      document.getElementById(`count_${index}`).value = "1";
+      document.getElementById(`count_${index}`).disabled = true;
+      document.getElementById(`count_${index}`).style.opacity = "0.3";
     });
-    
     document.getElementById("noteInput").value = "";
     document.getElementById("outputContainer").style.display = "none";
-    showToast("🧹 Tüm tren numaraları ve alanlar temizlendi.");
+    showToast("🧹 Temizlendi.");
   }
 
   function toggleRadioCount(index) {
@@ -766,40 +295,12 @@
     countInput.disabled = !isChecked;
   }
 
-  function playDoorChime() {
-    try {
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      if (!AudioCtx) return;
-      const ctx = new AudioCtx();
-      const now = ctx.currentTime;
-      const notes = [
-        { freq: 698.46, time: 0.00, dur: 0.38 },
-        { freq: 622.25, time: 0.28, dur: 0.55 }
-      ];
-      notes.forEach(note => {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(note.freq, now + note.time);
-        gain.gain.setValueAtTime(0, now + note.time);
-        gain.gain.linearRampToValueAtTime(0.28, now + note.time + 0.02);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + note.time + note.dur);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start(now + note.time);
-        osc.stop(now + note.time + note.dur);
-      });
-    } catch (e) { console.log("Audio hatası:", e); }
-  }
-
   function formatSingleTrn(val) {
     if (!val || val.trim() === "") return "";
     const parts = val.replace(/trn|rt/gi, '').split(/[-/ ]+/).filter(p => p.trim() !== "");
     if (parts.length === 0) return "";
     let firstPart = parts[0].trim();
-    if (/^\d+$/.test(firstPart)) {
-      firstPart = firstPart.padStart(3, '0');
-    }
+    if (/^\d+$/.test(firstPart)) firstPart = firstPart.padStart(3, '0');
     return firstPart;
   }
 
@@ -819,74 +320,37 @@
     return trnValues.some(item => item.val !== "" && counts[item.val] > 1);
   }
 
-  function getDateOnlyFileName() {
-    const now = new Date();
-    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}.png`;
-  }
-
-  function formatServiceName(name) {
-    return name.replace(/ P1$/, " PERON 1 SERVİS").replace(/ P2$/, " PERON 2 SERVİS");
-  }
-
   function generateOutput() {
-    if (validateLiveDuplicates()) {
-        showToast("❌ Aynı tren numarası var!", true);
-        return;
+    if (validateLiveDuplicates()) { showToast("❌ Aynı tren numarası var!", true); return; }
+    if (serviceStations.some((_, index) => document.getElementById(`park_${index}`).value === "")) {
+      showToast("❌ Konum seçmelisiniz!", true); return;
     }
-
-    const missingPark = serviceStations.some((_, index) => document.getElementById(`park_${index}`).value === "");
-    if (missingPark) {
-        showToast("❌ Tüm istasyonlar için tren konumu seçilmeli!", true);
-        return;
-    }
-    
-    playDoorChime();
 
     const rawList = [];
     serviceStations.forEach((item, index) => {
-      const trnInputEl = document.getElementById(`trn_${index}`);
-      const hasRadio = document.getElementById(`radio_${index}`).checked;
-      const radioCount = document.getElementById(`count_${index}`).value || "1";
       rawList.push({
-        trn: formatSingleTrn(trnInputEl.value) || "-",
+        trn: formatSingleTrn(document.getElementById(`trn_${index}`).value) || "-",
         park: document.getElementById(`park_${index}`).value,
-        service: formatServiceName(item.name),
-        hasRadio: hasRadio,
-        radioCount: radioCount
+        service: item.name.replace(/ P1$/, " PERON 1 SERVİS").replace(/ P2$/, " PERON 2 SERVİS"),
+        hasRadio: document.getElementById(`radio_${index}`).checked,
+        radioCount: document.getElementById(`count_${index}`).value || "1"
       });
     });
 
-    // Park bölgelerine göre tren sayılarını hesapla (Yoğunluk tespiti için)
     const parkCounts = {};
-    rawList.forEach(item => {
-      parkCounts[item.park] = (parkCounts[item.park] || 0) + 1;
-    });
+    rawList.forEach(item => parkCounts[item.park] = (parkCounts[item.park] || 0) + 1);
 
-    // Grupları oluştur
     const groupMap = {};
     rawList.forEach(item => {
-      if (!groupMap[item.park]) {
-        groupMap[item.park] = [];
-      }
+      if (!groupMap[item.park]) groupMap[item.park] = [];
       groupMap[item.park].push(item);
     });
 
     const groups = [];
     for (const park in groupMap) {
-      groups.push({
-        park: park,
-        count: parkCounts[park],
-        items: groupMap[park]
-      });
+      groups.push({ park: park, count: parkCounts[park], items: groupMap[park] });
     }
-
-    // EN ÇOK TREN OLAN (YOĞUN OLAN) EN ÜSTTE OLSUN -> Azalan sırada sıralama
-    groups.sort((a, b) => {
-      if (b.count !== a.count) {
-        return b.count - a.count; // Sayıya göre azalan
-      }
-      return a.park.localeCompare(b.park); // Eşitse alfabetik
-    });
+    groups.sort((a, b) => b.count !== a.count ? b.count - a.count : a.park.localeCompare(b.park));
 
     const resultListEl = document.getElementById("resultList");
     resultListEl.innerHTML = "";
@@ -894,59 +358,29 @@
     groups.forEach(group => {
       const groupEl = document.createElement("div");
       groupEl.className = "park-group";
-
-      const headerEl = document.createElement("div");
-      headerEl.className = "park-group-header";
-      headerEl.innerText = group.park + " - PARK (" + group.count + " Tren)";
-      groupEl.appendChild(headerEl);
-
+      groupEl.innerHTML = `<div class="park-group-header">${group.park} - PARK (${group.count} Tren)</div>`;
+      
       const bodyEl = document.createElement("div");
       bodyEl.className = "park-group-body";
 
       group.items.forEach(item => {
         const row = document.createElement("div");
         row.className = "park-group-row";
-
-        let radioBadgeHtml = "";
-        if (item.hasRadio) {
-          const countText = parseInt(item.radioCount) > 1 ? `<span class="radio-qty">${item.radioCount}</span>` : "";
-          radioBadgeHtml = `
-            <div class="radio-raw-item" title="${item.radioCount} Adet Telsiz">
-              ${radioSvgDark}
-              ${countText}
-            </div>
-          `;
-        }
-
-        row.innerHTML = `
-          <div class="trn-col">
-            <span class="scada-badge">${item.trn}</span>
-            <div class="radio-slot">${radioBadgeHtml}</div>
-          </div>
-          <div class="service-flow-container">
-            <span class="service-arrow">➔</span>
-            <span class="service-title">${item.service}</span>
-          </div>
-        `;
+        let radioBadgeHtml = item.hasRadio ? `<div class="radio-raw-item">${radioSvgDark}${parseInt(item.radioCount) > 1 ? `<span class="radio-qty">${item.radioCount}</span>` : ""}</div>` : "";
+        row.innerHTML = `<div class="trn-col"><span class="scada-badge">${item.trn}</span>${radioBadgeHtml}</div><div class="service-flow-container"><span class="service-arrow">➔</span><span class="service-title">${item.service}</span></div>`;
         bodyEl.appendChild(row);
       });
-
       groupEl.appendChild(bodyEl);
       resultListEl.appendChild(groupEl);
     });
 
     const noteText = document.getElementById("noteInput").value.trim();
     const resultNoteBox = document.getElementById("resultNoteBox");
-    if (noteText !== "") {
-      resultNoteBox.innerText = "NOT: " + noteText;
-      resultNoteBox.style.display = "block";
-    } else {
-      resultNoteBox.style.display = "none";
-    }
+    if (noteText !== "") { resultNoteBox.innerText = "NOT: " + noteText; resultNoteBox.style.display = "block"; }
+    else { resultNoteBox.style.display = "none"; }
 
     document.getElementById("liveDate").innerText = getFormattedDateWithDay();
     document.getElementById("resultShiftBadge").innerText = calculateCurrentMorningShiftGroup();
-
     document.getElementById("outputContainer").style.display = "block";
     document.getElementById("outputContainer").scrollIntoView({ behavior: 'smooth' });
   }
@@ -956,37 +390,34 @@
     toast.innerText = msg;
     toast.className = isError ? "toast toast-error" : "toast";
     toast.style.display = "block";
-    setTimeout(() => { toast.style.display = "none"; }, 4000);
+    setTimeout(() => { toast.style.display = "none"; }, 3000);
   }
 
   async function sendToWhatsAppWeb() {
-    if (validateLiveDuplicates()) { showToast("❌ Hatalı giriş!", true); return; }
-    const captureArea = document.getElementById("captureArea");
-    const fileName = getDateOnlyFileName();
-    showToast("Görsel hazırlanıyor...");
+    if (validateLiveDuplicates()) return;
+    const canvas = await html2canvas(document.getElementById("captureArea"), { scale: 3, useCORS: true, backgroundColor: "#ffffff" });
     try {
-      const canvas = await html2canvas(captureArea, { scale: 3, useCORS: true, backgroundColor: "#ffffff" });
       const blob = await new Promise(r => canvas.toBlob(r, "image/png"));
       await navigator.clipboard.write([new ClipboardItem({"image/png": blob})]);
       showToast("✅ Görsel kopyalandı! CTRL+V yapın.");
-      window.open("https://web.whatsapp.com", "_blank");
     } catch {
-      const canvas = await html2canvas(captureArea, { scale: 3, useCORS: true, backgroundColor: "#ffffff" });
-      const a = document.createElement('a'); a.download = fileName; a.href = canvas.toDataURL(); a.click();
-      window.open("https://web.whatsapp.com", "_blank");
+      const a = document.createElement('a'); a.download = "m5-liste.png"; a.href = canvas.toDataURL(); a.click();
     }
+    window.open("https://web.whatsapp.com", "_blank");
   }
 
   async function shareToWhatsAppMobile() {
-    if (validateLiveDuplicates()) { showToast("❌ Hatalı giriş!", true); return; }
+    if (validateLiveDuplicates()) return;
     const canvas = await html2canvas(document.getElementById("captureArea"), { scale: 3, useCORS: true, backgroundColor: "#ffffff" });
-    canvas.toBlob(async (blob) => {
-      const file = new File([blob], getDateOnlyFileName(), { type: "image/png" });
-      if (navigator.canShare && navigator.canShare({ files: [file] })) await navigator.share({ files: [file] });
-      else {
-         const a = document.createElement('a'); a.download = getDateOnlyFileName(); a.href = canvas.toDataURL(); a.click();
+    try {
+      const blob = await new Promise(r => canvas.toBlob(r, "image/png"));
+      const file = new File([blob], "m5-liste.png", { type: "image/png" });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file], title: 'M5 Sabah Tren Servis Listesi' });
+      } else {
+        const a = document.createElement('a'); a.download = "m5-liste.png"; a.href = canvas.toDataURL(); a.click();
       }
-    });
+    } catch (e) { console.log(e); }
   }
 </script>
 
