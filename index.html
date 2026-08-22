@@ -5,12 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>M5 Metro Sabah Tren Servis Listesi</title>
   
+  <!-- PWA Manifest Bağlantısı (EN ÖNEMLİ KISIM) -->
+  <link rel="manifest" href="manifest.json">
+  
   <meta name="theme-color" content="#0b1120">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="M5 Servis">
 
-  <!-- Dinamik İkonlar için Canvas Üreticisi -->
+  <!-- Dinamik İkon Üreticisi -->
   <script>
     function generateDynamicIcons() {
       [192, 512].forEach(size => {
@@ -18,12 +21,8 @@
         canvas.width = size;
         canvas.height = size;
         const ctx = canvas.getContext('2d');
-        
-        // Mor Arka Plan (M5 Rengi)
         ctx.fillStyle = '#6b215c';
         ctx.fillRect(0, 0, size, size);
-        
-        // Beyaz Metin (M5)
         ctx.fillStyle = '#ffffff';
         ctx.font = `bold ${size * 0.45}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
         ctx.textAlign = 'center';
@@ -47,7 +46,6 @@
       --card-bg: #131d31;
       --accent: #6b215c;
       --accent-hover: #541948;
-      --error-bg: #ef4444;
       --wa-green: #25d366;
       --wa-hover: #1ebc57;
       --text: #f8fafc;
@@ -64,7 +62,6 @@
     .m5-circle-logo { background-color: #6b215c; color: #ffffff; width: 32px; height: 32px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 900; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
     .header p { font-size: 12.5px; color: var(--text-muted); margin-top: 6px; }
     .shift-info-box { background: linear-gradient(135deg, #1e1b4b 0%, #311042 100%); border: 1px solid #7e22ce; border-radius: 10px; padding: 10px 14px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-    .shift-info-title { font-size: 15px; }
     .shift-info-value { font-size: 15px; color: #f3e8ff; font-weight: 900; background: #7e22ce; padding: 4px 10px; border-radius: 6px; }
     .shift-date-value { font-size: 13.5px; color: #e2e8f0; font-weight: 700; background: rgba(255, 255, 255, 0.1); padding: 4px 8px; border-radius: 6px; }
     .card { background-color: var(--card-bg); border-radius: 12px; padding: 14px; border: 1px solid var(--border); margin-bottom: 18px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3); }
